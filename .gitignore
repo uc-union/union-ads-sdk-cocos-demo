@@ -1,28 +1,33 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Gradle
+.gradle/
+gradle/
+gradlew
+gradlew.bat
 
-# Precompiled Headers
-*.gch
-*.pch
+# Android Studio
+.idea/
+*.iml
+captures/
 
-# Compiled Dynamic libraries
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+gen/
+
+# Vim
+.sw[po]
+.*.sw[po]
+
+# Python Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
 *.so
-*.dylib
-*.dll
 
-# Fortran module files
-*.mod
+# Output folder
+out/
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+local.properties
