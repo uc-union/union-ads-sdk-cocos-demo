@@ -31,3 +31,4 @@ __pycache__/
 out/
 
 local.properties
+build
