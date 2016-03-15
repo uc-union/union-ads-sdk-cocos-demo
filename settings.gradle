@@ -1,6 +1,24 @@
+File propsFile = file("local.properties");
+if (!propsFile.exists()) {
+    throw new Exception("local.properties not exists, can not find {cocos2d.home}!")
+}
+Properties props = new Properties();
+props.load(new FileInputStream(propsFile))
+String cocos2dHome = props.getProperty('cocos2d.home')
+if (cocos2dHome == null || cocos2dHome.length() == 0) {
+    throw new Exception("can not find {cocos2d.home} in local.properties, please configure one!");
+} else {
+    System.out.println("Find {cocos2d.home}:" + cocos2dHome + " !");
+    File libcocos2dxFolder = new File(cocos2dHome, 'cocos/platform/android/libcocos2dx');
+    if (!libcocos2dxFolder.exists()) {
+        String msg = "Can not find " + libcocos2dxFolder.absolutePath + ", please make sure" +
+                " {cocos2d.home} is right configured!";
+        throw new Exception(msg)
+    }
+}
 include ':libcocos2dx'
-project(':libcocos2dx').projectDir = new File(settingsDir, '../cocos2d/cocos/platform/android/libcocos2dx')
+project(':libcocos2dx').projectDir = new File(cocos2dHome, 'cocos/platform/android/libcocos2dx');
 include ':libsdk'
 project(':libsdk').projectDir = new File(settingsDir, 'sdk/android')
-include ':union-ads-cocos'
-project(':union-ads-cocos').projectDir = new File(settingsDir, 'app')
+include ':demo'
+project(':demo').projectDir = new File(settingsDir, 'demo')
