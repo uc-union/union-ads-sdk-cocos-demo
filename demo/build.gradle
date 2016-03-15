@@ -54,5 +54,4 @@ dependencies {
     compile 'com.facebook.android:audience-network-sdk:4.9.+'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.android.support:support-v4:22.2.1'
-    compile 'com.ucweb.union.ads:unionads:2.1.4.122'
 }
