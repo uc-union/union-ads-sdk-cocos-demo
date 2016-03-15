@@ -1,11 +1,11 @@
 Demo工程是Union Ads的Unity版本的SDK的示例工程。    
 Demo工程是以git submodule的方式集成SDK的，开发者可按照以下步骤获取Demo工程源码。    
 以下步骤假定你是使用Git作为VCS的，如果不是，请安装并使用Git.    
-1. clone 示例工程  
+#####clone 示例工程  
 ```
 git clone https://github.com/uc-union/union-ads-sdk-cocos-demo.git
 ```
-2. 更新sdk工程    
+#####更新sdk工程    
 ```
 git submodule update --remote
 ```
