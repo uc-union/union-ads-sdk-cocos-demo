@@ -19,6 +19,6 @@ if (cocos2dHome == null || cocos2dHome.length() == 0) {
 include ':libcocos2dx'
 project(':libcocos2dx').projectDir = new File(cocos2dHome, 'cocos/platform/android/libcocos2dx');
 include ':libsdk'
-project(':libsdk').projectDir = new File(settingsDir, 'sdk/android')
+project(':libsdk').projectDir = new File(settingsDir, 'sdk/sdk')
 include ':demo'
 project(':demo').projectDir = new File(settingsDir, 'demo')

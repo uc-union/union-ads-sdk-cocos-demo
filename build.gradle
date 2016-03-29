@@ -16,5 +16,6 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://raw.githubusercontent.com/leeowenowen/unity_test/master" }
+        maven { url 'http://100.84.73.82:8081/nexus/content/groups/public' }
     }
 }
