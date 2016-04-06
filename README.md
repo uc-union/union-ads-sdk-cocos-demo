@@ -7,6 +7,7 @@ git clone https://github.com/uc-union/union-ads-sdk-cocos-demo.git
 ```
 #####更新sdk工程    
 ```
+git submodule update --init --recursive
 git submodule update --remote
 ```
     

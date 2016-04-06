@@ -32,3 +32,4 @@ out/
 
 local.properties
 build
+*/obj/
