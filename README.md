@@ -1,3 +1,7 @@
+##union-ads-sdk-cocos-demo
+
+***
+
 union-ads-sdk-cocos-demo is the Cocos2dx version of Union Ads SDK Demo project。    
 SDK is integrated in the form of `git submodule`, follow steps below to get demo source code.
  
