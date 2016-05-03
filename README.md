@@ -23,4 +23,4 @@ Now you do have the latest demo project and all its dependencies. And then you s
 
 Just run the demo project and enjoy youself.
 
-More details information about how to integrate  Union Ads SDK , refer [wiki](https://github.com/uc-union/union-ads-sdk-cocos-demo/wiki)
+More details information about how to integrate  Union Ads SDK , please refer to [wiki](https://github.com/uc-union/union-ads-sdk-cocos-demo/wiki)
