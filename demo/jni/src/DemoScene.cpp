@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cstring>
 #include <string>
+#include <list>
 
 #include "ui/CocosGUI.h" 
 #include "cocos/platform/CCFileUtils.h"
@@ -23,6 +24,7 @@ using cocos2d::ui::Button;
 using cocos2d::ui::ImageView;
 using namespace cocos2d::ui;
 using namespace com_ucweb_union_ads_sdk;
+using com_ucweb_union_ads_sdk::Image;
 Scene* DemoScene::createScene()
 {
 
@@ -106,7 +108,18 @@ public:
         LOGD("NativeAdListener:%s", mNativeAd.getTitle().c_str());
         LOGD("NativeAdListener:%s", mNativeAd.getDescription().c_str());
         LOGD("NativeAdListener:%s", mNativeAd.getIconUrl().c_str());
-        LOGD("NativeAdListener:%s", mNativeAd.getCoverUrl().c_str());
+        const std::vector<Image>& covers = mNativeAd.getCovers();
+        LOGD("CoverImageCount[%d]",covers.size());
+        for(int i = 0; i < covers.size(); ++i){
+            const Image& image = covers[i];
+            if(image.isValid()) {
+              LOGD("CoverImage[%d][size:%dX%d][url:%s]", i, image.getWidth(),image.getHeight(), image.getUrl().c_str());
+            }
+        }
+        Image image = mNativeAd.filterImageBySize(320, 480);
+        if(image.isValid()) {
+          LOGD("FilteredImage[size:%dX%d][url:%s]", image.getWidth(),image.getHeight(), image.getUrl().c_str());
+        }
         mNativeAdLoadedCallback();
     }
     virtual void onClosed()  override{
@@ -166,9 +179,19 @@ void DemoScene::nativeAdLoaded(){
         LOGD("DemoScene::Start fetch icon..."); 
         ImageFetcher::fetch(mNativeAd.getIconUrl().c_str(), kIconPath + now(), std::bind(&DemoScene::updateIcon, this, _1, _2));
     }
-    if(!mNativeAd.getCoverUrl().empty()){
+    Image image = mNativeAd.filterImageBySize(320, 480);
+    const Image * pImg = 0;
+    if(image.isValid()) {
+        pImg = &image;
+    }else{
+        const std::vector<Image>& covers = mNativeAd.getCovers();
+        if(!covers.empty()){
+            pImg = &(covers[0]);
+        }
+    }
+    if(pImg && !pImg->getUrl().empty()){
         LOGD("DemoScene::Start fetch cover..."); 
-        ImageFetcher::fetch(mNativeAd.getCoverUrl().c_str(), kCoverPath + now(), std::bind(&DemoScene::updateCover, this, _1, _2));
+        ImageFetcher::fetch(pImg->getUrl().c_str(), kCoverPath + now(), std::bind(&DemoScene::updateCover, this, _1, _2));
     }
 }
 DemoScene::DemoScene() {
