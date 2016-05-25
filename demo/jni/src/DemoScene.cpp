@@ -256,20 +256,27 @@ bool DemoScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     double itemHeight = visibleSize.height / 6;
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    origin.x += 20;
+    origin.y += 20;
     
     //Title
 	mTitle = Label::create();
     mTitle->ignoreAnchorPointForPosition(true); 
+    mTitle->setSystemFontSize(10);
     mTitle->setPosition(Vec2(origin.x + visibleSize.width/2,
                             origin.y + itemHeight * 5));
     mTitle->setContentSize(Size(visibleSize.width / 2, itemHeight));
+    mTitle->setMaxLineWidth(visibleSize.width/2 - 10);
     this->addChild(mTitle, 1);
     //Description
     mDescription = Label::create();
     mDescription->ignoreAnchorPointForPosition(true); 
+    mDescription->setSystemFontSize(10);
     mDescription->setPosition(Vec2(origin.x + visibleSize.width/2,
                           origin.y + itemHeight * 4));
     mDescription->setContentSize(Size(visibleSize.width / 2, itemHeight));
+    mDescription->setMaxLineWidth(10);
+    mDescription->setLineBreakWithoutSpace(true);
     this->addChild(mDescription, 1);
     //Icon
     mIcon = ImageView::create();
@@ -295,7 +302,7 @@ bool DemoScene::init()
     btnBanner->ignoreAnchorPointForPosition(true); 
     btnBanner->setPosition(Vec2(origin.x, origin.y));  
     //btnBanner->addClickEventListener(std::bind(&DemoScene::showBanner, this, this, origin.x, origin.y, visibleSize.width, itemHeight));  
-    btnBanner->addClickEventListener(std::bind(&DemoScene::showBanner, this, this, d2pw(0), cocos2AndroidY(250), d2pw(visibleSize.width/2), d2ph(100)));  
+    btnBanner->addClickEventListener(std::bind(&DemoScene::showBanner, this, this, d2pw(origin.x), cocos2AndroidY(250), d2pw(visibleSize.width/2), d2ph(100)));  
     
     this->addChild(btnBanner,1);  
 
