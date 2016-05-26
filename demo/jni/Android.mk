@@ -30,6 +30,7 @@ LOCAL_SRC_FILES +=  $(SDK_SRC_CPP_ROOT)/impl/AdListenerProxy.cpp \
                     $(SDK_SRC_CPP_ROOT)/impl/Interstitial.cpp \
                     $(SDK_SRC_CPP_ROOT)/impl/NativeAd.cpp \
                     $(SDK_SRC_CPP_ROOT)/impl/JNICommon.cpp \
+                    $(SDK_SRC_CPP_ROOT)/impl/Util.cpp \
 #------------------------------------------------------------
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static

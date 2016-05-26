@@ -17,6 +17,7 @@
 #include "impl/JNICommon.h"
 #include "AdListener.h"
 #include "AdError.h"
+#include "Util.h"
 
 namespace com_ucweb_union_ads_demo {
 USING_NS_CC;
@@ -52,6 +53,7 @@ public:
     }
     virtual void onLoaded() override{
         LOGD("BannerAdListener::onLoaded");
+        mBanner.show();
     }
     virtual void onClosed()  override{
          LOGD("BannerAdListener::onClosed"); 
@@ -195,21 +197,35 @@ void DemoScene::nativeAdLoaded(){
     }
 }
 DemoScene::DemoScene() {
-    mBannerAdListener = new BannerAdListener(mBanner);
+    mTopBannerAdListener = new BannerAdListener(mTopBanner);
+    mBottomBannerAdListener = new BannerAdListener(mBottomBanner);
     mInterstitialAdListener = new InterstitialAdListener(mInterstitial);
     mNativeAdListener = new NativeAdListener(mNativeAd, std::bind(&DemoScene::nativeAdLoaded, this));
 }
 DemoScene::~DemoScene() {
-    delete mBannerAdListener;
+    delete mTopBannerAdListener;
+    mTopBannerAdListener = 0;
+    delete mBottomBannerAdListener;
+    mBottomBannerAdListener = 0;
     delete mInterstitialAdListener;
-    delete mBannerAdListener;
+    mInterstitialAdListener = 0;
+    delete mNativeAdListener;
+    mNativeAdListener = 0;
 }
-void DemoScene::showBanner(Ref* ref, int x, int y, int w, int h){
-    AdRequest& request =  AdRequest::newBuilder().pub("ssr@debugbanner").build();
-    mBanner.setShowRect(x, y, w, h);
-    mBanner.setListener(mBannerAdListener);
-    mBanner.load(request);
-    mBanner.show();
+void DemoScene::showBanner(Ref* ref){
+    {
+        AdRequest& request =  AdRequest::newBuilder().pub("ssr@debugbanner").build();
+        mTopBanner.setShowPosition(0, 0);
+        mTopBanner.setListener(mTopBannerAdListener);
+        mTopBanner.load(request);
+    }
+    {
+        AdRequest& request =  AdRequest::newBuilder().pub("ssr@debugbanner").build();
+        Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
+        mBottomBanner.setShowPosition(0, frameSize.height - Util::dp2Pixel(50));
+        mBottomBanner.setListener(mBottomBannerAdListener);
+        mBottomBanner.load(request);
+    }
 }
 void DemoScene::showInterstitial(Ref* ref){
     AdRequest& request =  AdRequest::newBuilder().pub("ssr@debuginterstitial").build();
@@ -226,23 +242,6 @@ void DemoScene::exitApp(Ref* ref) {
     Director::getInstance()->end();
 }
 
-double d2pw(double dot) {
-    Size visibleSize = Director::getInstance()->getVisibleSize();
-    Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
-    return frameSize.width * dot / visibleSize.width;
-}
-double d2ph(double dot){
-     Size visibleSize = Director::getInstance()->getVisibleSize();
-    Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
-    return frameSize.height * dot / visibleSize.height;   
-}
-
-double cocos2AndroidY(double y) {
-    double pixelY = d2ph(y);
-    Size frameSize = Director::getInstance()->getOpenGLView()->getFrameSize();
-    return frameSize.height - pixelY;
-}
-
 // on "init" you need to initialize your instance
 bool DemoScene::init()
 {
@@ -257,7 +256,7 @@ bool DemoScene::init()
     double itemHeight = visibleSize.height / 6;
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
     origin.x += 20;
-    origin.y += 20;
+    origin.y += 50;
     
     //Title
 	mTitle = Label::create();
@@ -301,9 +300,7 @@ bool DemoScene::init()
     btnBanner->setTitleFontSize(15);  
     btnBanner->ignoreAnchorPointForPosition(true); 
     btnBanner->setPosition(Vec2(origin.x, origin.y));  
-    //btnBanner->addClickEventListener(std::bind(&DemoScene::showBanner, this, this, origin.x, origin.y, visibleSize.width, itemHeight));  
-    btnBanner->addClickEventListener(std::bind(&DemoScene::showBanner, this, this, d2pw(origin.x), cocos2AndroidY(250), d2pw(visibleSize.width/2), d2ph(100)));  
-    
+    btnBanner->addClickEventListener(std::bind(&DemoScene::showBanner, this, this));  
     this->addChild(btnBanner,1);  
 
     Button* btnInterstitial = Button::create();  

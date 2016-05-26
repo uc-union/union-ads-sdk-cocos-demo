@@ -34,7 +34,7 @@ public:
     // implement the "static create()" method manually
     CREATE_FUNC(DemoScene);
 private:
-    void showBanner(Ref* ref, int x, int y, int w, int h);
+    void showBanner(Ref* ref);
     void showInterstitial(Ref* ref);
     void showNativeAd(Ref* ref);
     void exitApp(Ref* ref);
@@ -42,10 +42,12 @@ private:
     void updateIcon(bool success, const std::string& savePath);
     void updateCover(bool success, const std::string& savePath);
 private:
-	Banner mBanner;
+	Banner mTopBanner;
+	Banner mBottomBanner;
 	Interstitial mInterstitial;
 	NativeAd mNativeAd;
-	AdListener* mBannerAdListener;
+	AdListener* mTopBannerAdListener;
+	AdListener* mBottomBannerAdListener;
 	AdListener* mInterstitialAdListener;
 	AdListener* mNativeAdListener;
 
