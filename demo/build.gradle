@@ -50,9 +50,11 @@ android {
 dependencies {
     compile project(':libcocos2dx')
     compile project(':libsdk');
-    // Facebook Ads
-    // Google AdMob
-    compile 'com.facebook.android:audience-network-sdk:4.10.+'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
+
+    // Facebook Ad Sdk
+    compile 'com.facebook.android:audience-network-sdk:4.11.+'
+
+    // Google AdMob Sdk
+    compile 'com.google.android.gms:play-services-ads:8.4.+'
     compile 'com.android.support:support-v4:23.2.1'
 }
