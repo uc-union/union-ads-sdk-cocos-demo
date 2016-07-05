@@ -14,6 +14,9 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            url 'https://raw.githubusercontent.com/uc-union/union-ads-maven-repository/master'
+        }
         jcenter()
     }
 }

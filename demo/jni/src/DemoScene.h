@@ -35,7 +35,7 @@ public:
     CREATE_FUNC(DemoScene);
 private:
     void showBanner(Ref* ref);
-    void showInterstitial(Ref* ref);
+    void showInterstitial(Ref* ref, const std::string& pub, Interstitial* interstitial, AdListener* adListener);
     void showNativeAd(Ref* ref);
     void exitApp(Ref* ref);
     void nativeAdLoaded();
@@ -45,10 +45,12 @@ private:
 	Banner mTopBanner;
 	Banner mBottomBanner;
 	Interstitial mInterstitial;
+	Interstitial mInterstitialVideo;
 	NativeAd mNativeAd;
 	AdListener* mTopBannerAdListener;
 	AdListener* mBottomBannerAdListener;
 	AdListener* mInterstitialAdListener;
+	AdListener* mInterstitialVideoAdListener;
 	AdListener* mNativeAdListener;
 
 	cocos2d::Label* mTitle;

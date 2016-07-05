@@ -57,4 +57,15 @@ dependencies {
     // Google AdMob Sdk
     compile 'com.google.android.gms:play-services-ads:8.4.+'
     compile 'com.android.support:support-v4:23.2.1'
+
+    // Vungle
+    compile 'com.vungle:vungle-ads:3.3.4'
+    // AdColony
+    compile 'com.jirbo.adcolony:adcolony-ads:2.3.5'
+    // Unity
+    compile 'com.unity3d.ads:unity-ads:1.5.8'
+}
+
+task showMeCache << {
+    configurations.compile.each { println it }
 }

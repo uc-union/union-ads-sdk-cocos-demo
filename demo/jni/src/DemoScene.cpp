@@ -200,6 +200,7 @@ DemoScene::DemoScene() {
     mTopBannerAdListener = new BannerAdListener(mTopBanner);
     mBottomBannerAdListener = new BannerAdListener(mBottomBanner);
     mInterstitialAdListener = new InterstitialAdListener(mInterstitial);
+    mInterstitialVideoAdListener = new InterstitialAdListener(mInterstitialVideo);
     mNativeAdListener = new NativeAdListener(mNativeAd, std::bind(&DemoScene::nativeAdLoaded, this));
 }
 DemoScene::~DemoScene() {
@@ -209,6 +210,8 @@ DemoScene::~DemoScene() {
     mBottomBannerAdListener = 0;
     delete mInterstitialAdListener;
     mInterstitialAdListener = 0;
+    delete mInterstitialVideoAdListener;
+    mInterstitialVideoAdListener = 0;
     delete mNativeAdListener;
     mNativeAdListener = 0;
 }
@@ -227,10 +230,10 @@ void DemoScene::showBanner(Ref* ref){
         mBottomBanner.load(request);
     }
 }
-void DemoScene::showInterstitial(Ref* ref){
-    AdRequest& request =  AdRequest::newBuilder().pub("ssr@debuginterstitial").build();
-    mInterstitial.setListener(mInterstitialAdListener);
-    mInterstitial.load(request);
+void DemoScene::showInterstitial(Ref* ref, const std::string& pub, Interstitial* interstitial, AdListener* adListener){
+    AdRequest& request =  AdRequest::newBuilder().pub(pub).build();
+    interstitial->setListener(adListener);
+    interstitial->load(request);
 }
 void DemoScene::showNativeAd(Ref* ref){
     AdRequest& request =  AdRequest::newBuilder().pub("ssr@debugnative").build();
@@ -308,14 +311,22 @@ bool DemoScene::init()
     btnInterstitial->setTitleFontSize(15);  
     btnInterstitial->ignoreAnchorPointForPosition(true); 
     btnInterstitial->setPosition(Vec2(origin.x,origin.y + itemHeight));  
-    btnInterstitial->addClickEventListener(std::bind(&DemoScene::showInterstitial, this, this));  
+    btnInterstitial->addClickEventListener(std::bind(&DemoScene::showInterstitial, this, this, "ssr@debuginterstitial", &mInterstitial, mInterstitialAdListener));  
     this->addChild(btnInterstitial,1);  
+
+    Button* btnInterstitialVideo = Button::create();  
+    btnInterstitialVideo->setTitleText("Interstitial Video");  
+    btnInterstitialVideo->setTitleFontSize(15);  
+    btnInterstitialVideo->ignoreAnchorPointForPosition(true); 
+    btnInterstitialVideo->setPosition(Vec2(origin.x,origin.y + itemHeight * 2));  
+    btnInterstitialVideo->addClickEventListener(std::bind(&DemoScene::showInterstitial, this, this, "ssr@debugvideo", &mInterstitialVideo, mInterstitialVideoAdListener));  
+    this->addChild(btnInterstitialVideo,1);  
 
     Button* btnNativeAd = Button::create();  
     btnNativeAd->setTitleText("NativeAd");  
     btnNativeAd->setTitleFontSize(15);  
     btnNativeAd->ignoreAnchorPointForPosition(true); 
-    btnNativeAd->setPosition(Vec2(origin.x,origin.y + itemHeight * 2));  
+    btnNativeAd->setPosition(Vec2(origin.x,origin.y + itemHeight * 3));  
     btnNativeAd->addClickEventListener(std::bind(&DemoScene::showNativeAd, this, this));  
     this->addChild(btnNativeAd,1);  
 
@@ -323,7 +334,7 @@ bool DemoScene::init()
     btnNativeExit->setTitleText("Exit");  
     btnNativeExit->setTitleFontSize(15);  
     btnNativeExit->ignoreAnchorPointForPosition(true); 
-    btnNativeExit->setPosition(Vec2(origin.x,origin.y + itemHeight * 3));  
+    btnNativeExit->setPosition(Vec2(origin.x,origin.y + itemHeight * 4));  
     btnNativeExit->addClickEventListener(std::bind(&DemoScene::exitApp, this, this));  
     this->addChild(btnNativeExit,1);  
 
